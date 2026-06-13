@@ -9,7 +9,6 @@ public class PizzaRunner {
 		p.make();
 		p.show();
 		p.receipt();
-		
 		PepperoniPizza pp = new PepperoniPizza();
 		pp.make();
 		pp.show();

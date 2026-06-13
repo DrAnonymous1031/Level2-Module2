@@ -30,12 +30,10 @@ public class Shape {
 		this.color=color;
 		this.rob=new Robot();
 	}
-	
 	public void setupRobot() {
 		rob.setSpeed(100);
 		rob.moveTo(xLocation, yLocation);
 		rob.setPenColor(color);
 		rob.penDown();
 	}
-	
 }
