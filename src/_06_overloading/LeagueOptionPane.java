@@ -16,14 +16,21 @@ import javax.swing.JPanel;
  * GOAL: Create your own custom pop-up messages
  */
 public class LeagueOptionPane {
-	
 	public static void showMessageDialog(String message) {
+		JLabel label = new JLabel();
+		JFrame frame = new JFrame();
+		JPanel panel = new JPanel();
 		// 1. Open example.png and make a GUI that looks like that
-		//    The message parameter is what we want to show on our pop-up
-		
-		
+		//    The message parameter is what we want to show on our pop-up		
 		// 2. Uncomment the line of code below. It sets the location of our frame to the center of the screen
-		//frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		frame.add(panel);
+		panel.add(label);
+		label.setText("What am I doing here");
+		frame.setVisible(true);
+		label.setIcon(loadImage("java.png"));
+		frame.pack();
 	}
 	
 	// 3. Call this method in the Runner class
