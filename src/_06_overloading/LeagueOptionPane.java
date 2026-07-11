@@ -27,14 +27,27 @@ public class LeagueOptionPane {
 		frame.setLocationRelativeTo(null);
 		frame.add(panel);
 		panel.add(label);
-		label.setText("What am I doing here");
+		label.setText(message);
 		frame.setVisible(true);
 		label.setIcon(loadImage("java.png"));
 		frame.pack();
 	}
-	
+	public static void showMessageDialog(String message, String title) {
+		JLabel polly = new JLabel();
+		JFrame gigi = new JFrame();
+		JPanel beth = new JPanel();
+		gigi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gigi.setLocationRelativeTo(null);
+		gigi.add(beth);
+		beth.add(polly);
+		polly.setText(message);
+		gigi.setTitle(title);
+		gigi.setVisible(true);
+		polly.setIcon(loadImage("java.png"));
+		gigi.pack();
+	}
 	// 3. Call this method in the Runner class
-	
+
 
 	// 4. Create another showMessageDialog() method that lets us also choose the Message and Title 
 	//    2 String parameters (one for the message and one for the title)

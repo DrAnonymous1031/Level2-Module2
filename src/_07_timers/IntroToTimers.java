@@ -39,7 +39,6 @@ public class IntroToTimers extends JPanel implements ActionListener, KeyListener
 		frame.setPreferredSize(new Dimension (WIDTH,HEIGHT));
 		frame.pack();
 		frame.addKeyListener(this);
-		
 		// 2. Set the time variable to maxTime
 		time=maxTime;
 		// 3. Initialize timer to a new Timer object. For the first argument, use 1000/speed. For the second argument, use this
@@ -57,7 +56,7 @@ public class IntroToTimers extends JPanel implements ActionListener, KeyListener
 		// 8. Decrement time
 		time-=1;
 		// 9. if time is less than or equal to 2...
-		if(time<15) {
+		if(time<3) {
 			time=maxTime;
 		}
 			// 10. Set time equal to maxTime
