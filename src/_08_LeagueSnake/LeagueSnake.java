@@ -1,5 +1,7 @@
 package _08_LeagueSnake;
 
+import java.util.Random;
+
 import processing.core.PApplet;
 
 public class LeagueSnake extends PApplet {
@@ -15,7 +17,10 @@ public class LeagueSnake extends PApplet {
     int appleY;
     int startX;
     int startY;
-    
+    Segment head;
+    int FoodX;
+    int FoodY;
+    Random ran = new Random();
     /*
      * Setup methods
      * 
@@ -23,17 +28,22 @@ public class LeagueSnake extends PApplet {
      */
     @Override
     public void settings() {
-        
+        setSize(1000,1000);
     }
 
     @Override
     public void setup() {
-        
+        head = new Segment(startX,startY);
+        dropFood();
+    	appleX=ran.nextInt(51)*20;
+    	appleY=ran.nextInt(51)*20;
+    	startX=ran.nextInt(51)*20;
+    	startY=ran.nextInt(51)*20;
     }
 
     void dropFood() {
         // Set the food in a new random location
-        
+
     }
 
     /*
@@ -44,16 +54,23 @@ public class LeagueSnake extends PApplet {
 
     @Override
     public void draw() {
-        
+    	background(20,20,20);
+    	drawSnake();
+    	drawFood();
+    	for(int i=0; i<100000;i++) {
+    		print(i);
+    	}
     }
 
     void drawFood() {
         // Draw the food
-        
+        rect(appleX,appleY,20,20);
     }
 
     void drawSnake() {
         // Draw the head of the snake followed by its tail
+    	fill(ran.nextInt(256),ran.nextInt(256),ran.nextInt(256));
+        rect(startX,startY,50,50);
     }
 
     void drawTail() {
