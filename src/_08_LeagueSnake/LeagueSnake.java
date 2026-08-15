@@ -1,12 +1,13 @@
 package _08_LeagueSnake;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import processing.core.PApplet;
 
 public class LeagueSnake extends PApplet {
-    static final int WIDTH = 1000;
-    static final int HEIGHT = 1000;
+    static final int WIDTH = 500;
+    static final int HEIGHT = 500;
     
     /*
      * Game variables
@@ -21,6 +22,7 @@ public class LeagueSnake extends PApplet {
     Random ran = new Random();
     int direction=UP;
     int foods=0;
+    ArrayList<Segment> tail = new ArrayList<>();
     /*
      * Setup methods
      * 
@@ -34,8 +36,8 @@ public class LeagueSnake extends PApplet {
     @Override
     public void setup() {
     	frameRate(20);
-    	startX=ran.nextInt(100)*10;
-    	startY=ran.nextInt(100)*10;
+    	startX=ran.nextInt(50)*10;
+    	startY=ran.nextInt(50)*10;
         head = new Segment(startX,startY);
         dropFood();
 
@@ -44,8 +46,8 @@ public class LeagueSnake extends PApplet {
 
     void dropFood() {
         // Set the food in a new random location
-    	foodX=ran.nextInt(100)*10;
-    	foodY=ran.nextInt(100)*10;
+    	foodX=ran.nextInt(50)*10;
+    	foodY=ran.nextInt(50)*10;
     }
 
     /*
@@ -61,6 +63,7 @@ public class LeagueSnake extends PApplet {
     	eat();
     	drawSnake();
     	drawFood();
+    	
     }
 
     void drawFood() {
@@ -73,11 +76,15 @@ public class LeagueSnake extends PApplet {
         // Draw the head of the snake followed by its tail
     	fill(255,230,184);
         rect(head.x,head.y,10,10);
+        manageTail();
     }
 
     void drawTail() {
         // Draw each segment of the tail
-        
+    	fill(255,230,184);
+    	for(Segment s:tail) {
+    		rect(s.x,s.y,10,10);
+    	}
     }
 
     /*
@@ -90,7 +97,19 @@ public class LeagueSnake extends PApplet {
         // After drawing the tail, add a new segment at the "start" of the tail and
         // remove the one at the "end"
         // This produces the illusion of the snake tail moving.
-
+    	
+    	
+//    	
+//    	To make the tail "move" towards the new location of its head, add a new segment to the tail 
+    	// with the same x and y values as the head segment.
+//    	Remove the first segment from the tail, so the tail stays the same length
+    	
+    	
+    	checkTailCollision();
+    	drawTail();
+    	Segment placeholder1 = new Segment(head.x,head.y);
+    	tail.add(placeholder1);
+    	tail.remove(0);
     }
 
     void checkTailCollision() {
@@ -143,15 +162,15 @@ public class LeagueSnake extends PApplet {
     void checkBoundaries() {
         // If the snake leaves the frame, make it reappear on the other side
         if(head.x<=-10) {
-        	head.x=990;
+        	head.x=490;
         }
-        if(head.x>=1000) {
+        if(head.x>=500) {
         	head.x=0;
         }
         if(head.y<=-10) {
-        	head.y=990;
+        	head.y=490;
         }
-        if(head.y>=1000) {
+        if(head.y>=500) {
         	head.y=0;
         }
     }
@@ -161,7 +180,9 @@ public class LeagueSnake extends PApplet {
         // food appear
     	if(foodX==head.x&&foodY==head.y) {
             foods++;
-            dropFood();	
+            dropFood();
+            Segment placeholder1 = new Segment(head.x,head.y);
+        	tail.add(placeholder1);
     	}
     }
 
