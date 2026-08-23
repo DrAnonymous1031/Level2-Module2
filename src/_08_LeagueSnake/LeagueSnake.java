@@ -35,7 +35,7 @@ public class LeagueSnake extends PApplet {
 
     @Override
     public void setup() {
-    	frameRate(20);
+    	frameRate(15);
     	startX=ran.nextInt(50)*10;
     	startY=ran.nextInt(50)*10;
         head = new Segment(startX,startY);
@@ -114,7 +114,11 @@ public class LeagueSnake extends PApplet {
 
     void checkTailCollision() {
         // If the snake crosses its own tail, shrink the tail back to one segment
-        
+        for(int i=0;i<tail.size();i++) {
+        	if(head.x==tail.get(i).x && head.y==tail.get(i).y) {
+        		System.out.println("e");
+        	}
+        }
     }
 
     /*
