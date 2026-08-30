@@ -1,5 +1,7 @@
 package _08_LeagueSnake;
 
+import processing.core.PApplet;
+
 /*
  * This class will be used to represent each part of the moving snake.
  * 
@@ -15,4 +17,5 @@ public class Segment {
     	this.x=x;
     	this.y=y;
     }
+
 }

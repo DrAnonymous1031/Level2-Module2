@@ -35,10 +35,11 @@ public class LeagueSnake extends PApplet {
 
     @Override
     public void setup() {
-    	frameRate(15);
+    	frameRate(10);
     	startX=ran.nextInt(50)*10;
     	startY=ran.nextInt(50)*10;
         head = new Segment(startX,startY);
+        tail.add(head);
         dropFood();
 
 
@@ -46,8 +47,8 @@ public class LeagueSnake extends PApplet {
 
     void dropFood() {
         // Set the food in a new random location
-    	foodX=ran.nextInt(50)*10;
-    	foodY=ran.nextInt(50)*10;
+    	foodX=ran.nextInt(25)*20;
+    	foodY=ran.nextInt(25)*20;
     }
 
     /*
@@ -69,13 +70,13 @@ public class LeagueSnake extends PApplet {
     void drawFood() {
         // Draw the food
     	fill(255,0,0);
-        rect(foodX,foodY,10,10);
+        rect(foodX,foodY,20,20);
     }
 
     void drawSnake() {
         // Draw the head of the snake followed by its tail
     	fill(255,230,184);
-        rect(head.x,head.y,10,10);
+        rect(head.x,head.y,20,20);
         manageTail();
     }
 
@@ -83,7 +84,7 @@ public class LeagueSnake extends PApplet {
         // Draw each segment of the tail
     	fill(255,230,184);
     	for(Segment s:tail) {
-    		rect(s.x,s.y,10,10);
+    		rect(s.x,s.y,20,20);
     	}
     }
 
@@ -116,7 +117,8 @@ public class LeagueSnake extends PApplet {
         // If the snake crosses its own tail, shrink the tail back to one segment
         for(int i=0;i<tail.size();i++) {
         	if(head.x==tail.get(i).x && head.y==tail.get(i).y) {
-        		System.out.println("e");
+        		tail= new ArrayList<Segment>();
+        		tail.add(head);
         	}
         }
     }
@@ -143,6 +145,20 @@ public class LeagueSnake extends PApplet {
     	    	direction=RIGHT;
     	    }
     	    }
+    	else {
+    		if (key=='A') {
+    			direction=LEFT;
+    		}
+    		if (key=='W') {
+    			direction=UP;
+    		}
+    		if(key=='S') {
+    			direction=DOWN;
+    		}
+    		if(key=='D') {
+    			direction=RIGHT;
+    		}
+    	}
     }
 
     void move() {
@@ -151,28 +167,28 @@ public class LeagueSnake extends PApplet {
         
         if (direction == UP) {
             // Move head up
-        	head.y-=10;
+        	head.y-=20;
         } else if (direction == DOWN) {
             // Move head down
-            head.y+=10;
+            head.y+=20;
         } else if (direction == LEFT) {
-            head.x-=10;
+            head.x-=20;
         } else if (direction == RIGHT) {
-            head.x+=10;
+            head.x+=20;
         }
        checkBoundaries();
     }
 
     void checkBoundaries() {
         // If the snake leaves the frame, make it reappear on the other side
-        if(head.x<=-10) {
-        	head.x=490;
+        if(head.x<0) {
+        	head.x=480;
         }
         if(head.x>=500) {
         	head.x=0;
         }
-        if(head.y<=-10) {
-        	head.y=490;
+        if(head.y<0) {
+        	head.y=480;
         }
         if(head.y>=500) {
         	head.y=0;
@@ -185,7 +201,7 @@ public class LeagueSnake extends PApplet {
     	if(foodX==head.x&&foodY==head.y) {
             foods++;
             dropFood();
-            Segment placeholder1 = new Segment(head.x,head.y);
+            Segment placeholder1 = new Segment(tail.get(tail.size()-1).x,tail.get(tail.size()-1).y);
         	tail.add(placeholder1);
     	}
     }
@@ -194,3 +210,4 @@ public class LeagueSnake extends PApplet {
         PApplet.main(LeagueSnake.class.getName());
     }
 }
+
