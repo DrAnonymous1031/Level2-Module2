@@ -3,6 +3,8 @@ package _08_LeagueSnake;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import processing.core.PApplet;
 
 public class LeagueSnake extends PApplet {
@@ -17,12 +19,11 @@ public class LeagueSnake extends PApplet {
     int startX;
     int startY;
     Segment head;
-    int foodX;
-    int foodY;
     Random ran = new Random();
     int direction=UP;
     int foods=0;
     ArrayList<Segment> tail = new ArrayList<>();
+    ArrayList<Segment> food = new ArrayList<>();
     /*
      * Setup methods
      * 
@@ -35,20 +36,27 @@ public class LeagueSnake extends PApplet {
 
     @Override
     public void setup() {
+        String apples = JOptionPane.showInputDialog("How many apples do you want");
+        int appleNum= Integer.valueOf(apples);
+        for(int i=0; i<appleNum; i++) {
+        	Segment throwaway= new Segment(ran.nextInt(25)*20,ran.nextInt(25)*20);
+        	food.add(throwaway);
+        }
     	frameRate(10);
-    	startX=ran.nextInt(50)*10;
-    	startY=ran.nextInt(50)*10;
+    	startX=ran.nextInt(25)*20;
+    	startY=ran.nextInt(25)*20;
         head = new Segment(startX,startY);
         tail.add(head);
-        dropFood();
 
 
     }
 
-    void dropFood() {
+    void dropFood(Segment s) {
         // Set the food in a new random location
-    	foodX=ran.nextInt(25)*20;
-    	foodY=ran.nextInt(25)*20;
+    	int ranX=ran.nextInt(25)*20;
+    	int ranY=ran.nextInt(25)*20;
+    	s.x=ranX;
+    	s.y=ranY;
     }
 
     /*
@@ -62,15 +70,17 @@ public class LeagueSnake extends PApplet {
     	background(20,20,20);
     	move();
     	eat();
-    	drawSnake();
     	drawFood();
+    	drawSnake();
     	
     }
 
     void drawFood() {
         // Draw the food
     	fill(255,0,0);
-        rect(foodX,foodY,20,20);
+    	for(Segment s:food) {
+        rect(s.x,s.y,20,20);
+    	}
     }
 
     void drawSnake() {
@@ -133,29 +143,29 @@ public class LeagueSnake extends PApplet {
     public void keyPressed() {
         // Set the direction of the snake according to the arrow keys pressed
     	if (key == CODED) {
-    	    if (keyCode == UP) {
+    	    if (keyCode == UP && direction!=DOWN) {
     	    	direction=UP;
-    	    } else if (keyCode == DOWN) {
+    	    } else if (keyCode == DOWN && direction!=UP) {
     	    	direction=DOWN;
     	    }
-    	    else if (keyCode==LEFT) {
+    	    else if (keyCode==LEFT && direction!=RIGHT) {
     	    	direction=LEFT;
     	    }
-    	    else if (keyCode==RIGHT) {
+    	    else if (keyCode==RIGHT && direction!=LEFT) {
     	    	direction=RIGHT;
     	    }
     	    }
     	else {
-    		if (key=='A') {
+    		if (key=='a' && direction!=RIGHT) {
     			direction=LEFT;
     		}
-    		if (key=='W') {
+    		if (key=='w' && direction!=DOWN) {
     			direction=UP;
     		}
-    		if(key=='S') {
+    		if(key=='s' && direction!=UP) {
     			direction=DOWN;
     		}
-    		if(key=='D') {
+    		if(key=='d' && direction!=LEFT) {
     			direction=RIGHT;
     		}
     	}
@@ -198,11 +208,15 @@ public class LeagueSnake extends PApplet {
     void eat() {
         // When the snake eats the food, its tail should grow and more
         // food appear
-    	if(foodX==head.x&&foodY==head.y) {
-            foods++;
-            dropFood();
-            Segment placeholder1 = new Segment(tail.get(tail.size()-1).x,tail.get(tail.size()-1).y);
-        	tail.add(placeholder1);
+    	for(Segment s:food) {
+    		if(s.x==head.x&&s.y==head.y) {
+                foods++;
+                dropFood(s);
+                Segment placeholder1 = new Segment(tail.get(tail.size()-1).x,tail.get(tail.size()-1).y);
+            	tail.add(placeholder1);
+            	System.out.println("yo");
+    		}
+    		
     	}
     }
 
