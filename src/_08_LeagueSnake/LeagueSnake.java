@@ -49,7 +49,7 @@ public class LeagueSnake extends PApplet {
 			}
 		}
 		int numy = 0;
-		if (625 - tail.size() > numy) {
+		if (625 - tail.size() > tail.size()) {
 			for (int i = 0; i < appleNum; i++) {
 				boolean gh = false;
 				int foodX = ran.nextInt(25) * 20;
@@ -73,7 +73,6 @@ public class LeagueSnake extends PApplet {
 				numy++;
 			}
 		}
-		System.out.println(numy);
 		frameRate(10);
 		startX = ran.nextInt(25) * 20;
 		startY = ran.nextInt(25) * 20;
@@ -84,14 +83,12 @@ public class LeagueSnake extends PApplet {
 
 	void dropFood(Segment s) {
 		// Set the food in a new random location
-		int numy = 0;
-		if (625 - tail.size() > numy) {
+		if (625 - tail.size() > food.size()) {
 			for (int i = 0; i < food.size(); i++) {
-				System.out.println(1);
 				boolean gh = false;
 				int foodX = ran.nextInt(25) * 20;
 				int foodY = ran.nextInt(25) * 20;
-				Segment throwaway = new Segment(foodX, foodY);
+				Segment newFood = new Segment(foodX, foodY);
 				for (int l = 0; l < tail.size(); l++) {
 					if (tail.get(l).x == foodX && tail.get(l).y == foodY) {
 						gh = true;
@@ -103,9 +100,9 @@ public class LeagueSnake extends PApplet {
 					}
 				}
 				if (!gh) {
-					food.add(throwaway);
+					food.add(newFood);
+					break;
 				}
-				numy++;
 			}
 		}
 	}
@@ -253,11 +250,16 @@ public class LeagueSnake extends PApplet {
 	void eat() {
 		// When the snake eats the food, its tail should grow and more
 		// food appear
-		for (Segment s : food) {
-			if (s.x == head.x && s.y == head.y) {
-				dropFood(s);
+		int eee=food.size();
+		for (int i=0; i<eee;i++) {
+			if (food.get(i).x == head.x && food.get(i).y == head.y) {
+				dropFood(food.get(i));
+				food.remove(i);
 				Segment placeholder1 = new Segment(tail.get(tail.size() - 1).x, tail.get(tail.size() - 1).y);
 				tail.add(placeholder1);
+				System.out.println(food.size());
+				System.out.println(tail.size());
+				break;
 			}
 
 		}
